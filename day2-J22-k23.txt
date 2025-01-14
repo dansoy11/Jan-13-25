@@ -330,9 +330,95 @@ broadcast:
 trustwave.COM
 
 
+How to configure MSP cloud routers
+
+sh cdp neighbors
+
+Design and Implement Sykes using 10.0.0.0/8 with 1500 callcenterAgents, TLs, QAs, and PMs
+
+ConvertIT = 1500 = 11b
+SubtractIT = 32 - 11 = 21 = 3rd, 8i
+Ipasok si 8i sa 3rd Hiwa
+
+Peoplesoft.com     = 10.0.8.0 /23
+FirstValid(+1)     = 10.0.8.1
+LastIP/BroadCast   = 10.0.15.255
+NotPeoplesoft.com  = 10.0.16.0
 
 
+@D1 SYKES
+config t
+vlan 26
+ name Sykes.com
+ exit
+Int vlan 26
+ no shut
+ ip add 10.0.8.1 255.255.248.0
+ip dhcp excluded-add 10.0.8.1 10.0.8.100
+ip dhcp pool Sykes.com
+ network 10.0.8.0 255.255.248.0
+ default-router 10.0.8.1
+ domain-name Sykes.com
+ dns-server 10.61.1.10
+ option 150 ip 10.61.100.8
+end
+
+!In real world ang mga pc at telephone na naka kabit sa access switch
+
+@A2 switch
+conf t
+ Int e1/0
+  swi access vlan 26
+  do sh ip dhcp binding
+  end
+  
+@p2
+conf t
+  int e1/0
+   no shut
+   ip add dhcp
+   end
 
 
+Design and Implement Telus using 10.0.0.0/8 with 2500 callcenterAgents, TLs, QAs, and PMs
 
+ConvertIT = 2500 = 12b
+SubtractIT = 32 - 12 = 20 = 3rd, 16i
+Ipasok si 8i sa 3rd Hiwa
 
+Peoplesoft.com     = 10.0.16.0 /20
+FirstValid(+1)     = 10.0.16.1
+LastIP/BroadCast   = 10.0.31.255
+NotPeoplesoft.com  = 10.0.32.0
+
+  
+@D1 Telus
+config t
+vlan 27
+ name Telus.com
+ exit
+Int vlan 27
+ no shut
+ ip add 10.0.16.1 255.255.240.0
+ip dhcp excluded-add 10.0.16.1 10.0.16.100
+ip dhcp pool Telus.com
+ network 10.0.16.0 255.255.240.0
+ default-router 10.0.16.1
+ domain-name Telus.com
+ dns-server 10.61.1.10
+ option 150 ip 10.61.100.8
+end
+
+@A1 switch
+conf t
+ Int e0/0
+  swi access vlan 27
+  do sh ip dhcp binding
+  end
+  
+@p1
+conf t
+  int e0/0
+   no shut
+   ip add dhcp
+   end
