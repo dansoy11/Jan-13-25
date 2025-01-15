@@ -559,3 +559,11 @@ exit
 sip-ua
 sip-server ipv4:192.168.k.1
 
+----------------------
+Trouble shoot 
+@cmd
+ping 10.m.1.10 - pc
+ping 10.m.1.4 - Corebaba
+ping 10.m.100.8 - CUCM
+ping 200.0.0.m - PLDT
+ping 10.m.m.1 - Fiber Cable (Edge)
